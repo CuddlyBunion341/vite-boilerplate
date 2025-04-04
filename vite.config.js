@@ -1,23 +1,25 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import path from 'node:path';
 
-import { defineConfig } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import { partytownVite } from '@builder.io/partytown/utils';
+import legacy from '@vitejs/plugin-legacy';
+import glsl from 'vite-plugin-glsl';
 
-const { PORT = 3001 } = process.env;
+import _config from './_config';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [reactRefresh()],
+const HOST = _config.server.host;
+const PORT = _config.server.port;
+
+export default {
+  base: '/vite-boilerplate/',
   server: {
-    proxy: {
-      '/api': {
-        target: `http://localhost:${PORT}`,
-        changeOrigin: true,
-      },
-    },
+    host: HOST,
+    port: PORT
   },
-  build: {
-    outDir: 'dist/app',
-  },
-});
+  plugins: [
+    legacy(),
+    glsl(),
+    partytownVite({
+      dest: path.join(__dirname, 'dist', '~partytown')
+    })
+  ]
+};
