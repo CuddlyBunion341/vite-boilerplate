@@ -4,10 +4,8 @@ import { partytownVite } from '@builder.io/partytown/utils';
 import legacy from '@vitejs/plugin-legacy';
 import glsl from 'vite-plugin-glsl';
 
-import _config from './_config';
-
-const HOST = _config.server.host;
-const PORT = _config.server.port;
+const HOST = 'localhost';
+const PORT = 3000;
 
 export default {
   base: '/vite-boilerplate/',
